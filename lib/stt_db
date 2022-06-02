@@ -1,0 +1,111 @@
+import 'package:flutter_tts/flutter_tts.dart';
+
+enum TtsState { playing, stopped }
+void main(List<String> args) async {
+  FlutterTts flutterTts;
+  TtsState ttsState = TtsState.stopped;
+  var _text = ''; //_text dari STT
+  var isMendung = 'mendung';
+  var isHujan = 'hujan';
+  var isGerimis = 'gerimis';
+  var isAwan = 'awan';
+  var isPanas = 'panas';
+  var isDingin = 'dingin';
+  var isGelap = 'gelap';
+  var isTerang = 'terang';
+  var isSejuk = 'sejuk';
+  var isCuaca = 'cuaca'; // cuaca
+  var isGetar = 'getar';
+  var isGempa = 'gempa'; // gempa
+  var isPolusi = 'polusi';
+  var isUdara = 'udara';
+  var isHari = 'hari ini';
+  var isBesok = 'besok';
+  var isSekarang = 'sekarang';
+  var newText = ''; //? text dari proses STT
+  var nlp;
+
+//? Data cuaca dari DBase
+  var isWilayah = '';
+  var gps_wilayah = '';
+  var waktu = '';
+  var weather = '';
+  var suhu = '';
+  var kelembaban = '';
+  var w_speed = '';
+  var w_dir = '';
+
+//? Data gempa dari DBase
+  var titik_gempa = '';
+  var titik_pengguna = '';
+  var magnitude = '';
+  var tanggal = '';
+  var jam = '';
+  var wil_gempa = '';
+  var jarak = ''; //? perhitungan dari titik_gempa dengan titik_pengguna
+  var potensi = '';
+
+  //? Data kualitas udara di Dbase
+  var wil_udara = '';
+  var kondisi_udara = '';
+
+  var cuaca = _text.contains(isCuaca);
+  var gempa = _text.contains(isGempa);
+  var udara = _text.contains(isUdara);
+  var wilayah = _text.contains(isWilayah);
+  var sekarang = _text.contains(isSekarang);
+  var besok = _text.contains(isBesok);
+  var hari_ini = _text.contains(isHari);
+
+  if (cuaca && sekarang) {
+    newText =
+        ("Cuaca di $gps_wilayah Pada pukul $waktu hari ini, cuaca $weather dengan suhu $suhu derajat, kelembaban $kelembaban dan kecepatan angin $w_speed kilometer perjam ke $w_dir");
+    if (newText != null) {
+      if (newText.isNotEmpty) {
+        var result = await flutterTts.speak(newText);
+        if (result == 1) setState(() => ttsState = TtsState.playing);
+      }
+    }
+  }
+  if (cuaca && wilayah || sekarang) {
+    newText =
+        ("Cuaca di $wilayah Pada pukul $waktu hari ini, cuaca $weather dengan suhu $suhu derajat, kelembaban $kelembaban dan kecepatan angin $w_speed kilometer perjam ke $w_dir");
+    if (newText != null) {
+      if (newText.isNotEmpty) {
+        var result = await flutterTts.speak(newText);
+        if (result == 1) setState(() => ttsState = TtsState.playing);
+      }
+    }
+  }
+  if (cuaca && wilayah || sekarang) {
+    newText =
+        ("Cuaca di $wilayah Pada pukul $waktu hari ini, cuaca $weather dengan suhu $suhu derajat, kelembaban $kelembaban dan kecepatan angin $w_speed kilometer perjam ke $w_dir");
+    if (newText != null) {
+      if (newText.isNotEmpty) {
+        var result = await flutterTts.speak(newText);
+        if (result == 1) setState(() => ttsState = TtsState.playing);
+      }
+    }
+  }
+
+  //? NLP dan TTS info Gempa
+  if (gempa) {
+    newText =
+        ("gempa berkekuatan $magnitude Magnitude pada $tanggal jam $jam di $wil_gempa, $jarak kilometer dari anda $potensi");
+    if (newText != null) {
+      if (newText.isNotEmpty) {
+        var result = await flutterTts.speak(newText);
+        if (result == 1) setState(() => ttsState = TtsState.playing);
+      }
+    }
+  }
+
+  //? NLP dan TTS info kualitas udara
+  if (udara) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return PageBahasa();
+    }));
+  }
+}
+
+void setState(TtsState Function() param0) {}
