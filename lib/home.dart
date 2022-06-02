@@ -461,9 +461,7 @@ class _HomePageState extends State<HomePage> {
                             child: FloatingActionButton(
                               backgroundColor: const Color(0xfffffc00),
                               onPressed: () async {
-                                if (await Vibration.hasVibrator() == true) {
-                                  Vibration.vibrate(duration: 100);
-                                }
+                                Vibration.vibrate(duration: 100);
                                 _listen();
                               },
                               child: const Image(
